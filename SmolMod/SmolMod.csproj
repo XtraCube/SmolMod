@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Reactor.OxygenFilter.MSBuild" Version="0.1.4" />
+      <PackageReference Include="Reactor.OxygenFilter.MSBuild" Version="0.1.5" />
     </ItemGroup>
 
     <Target Name="Copy" AfterTargets="Reobfuscate">

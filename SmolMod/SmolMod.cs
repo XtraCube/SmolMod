@@ -42,7 +42,16 @@ namespace SmolMod
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Awake))]
         public static class ShipStatusAwakePatch
         {
-            public static void Postfix(ShipStatus __instance)
+            public static void Prefix(ShipStatus __instance)
+            {
+                SetMapSize(__instance);
+            }
+        }
+
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
+        public static class ShipStatusBeginPatch
+        {
+            public static void Prefix(ShipStatus __instance)
             {
                 SetMapSize(__instance);
             }
@@ -81,6 +90,7 @@ namespace SmolMod
         public static void SetMapSize(ShipStatus __instance)
         {
             __instance.transform.localScale = new Vector3(2, 2, __instance.transform.localScale.z);
+            __instance.SpawnRadius = 3.1f;
             SetDistances();
             switch (__instance.Type)
             {
@@ -101,13 +111,6 @@ namespace SmolMod
                     __instance.MeetingSpawnCenter2 = new Vector2(50f, 2.985f);
                     __instance.MapScale = mapScale + 3.4f;
                     return;
-
-                default:
-                    __instance.InitialSpawnCenter = new Vector2(0f, 0f);
-                    __instance.MeetingSpawnCenter = new Vector2(0f, 0f);
-                    __instance.MeetingSpawnCenter2 = new Vector2(0f, 0f);
-                    __instance.MapScale = mapScale + 3f;
-                    return;
             }
         }
         public static void SetDistances()
@@ -115,19 +118,19 @@ namespace SmolMod
             var useMod = 1.6f;            
             try
             {
-                foreach (var body in UnityEngine.Object.FindObjectsOfType<Console>().ToArray())
+                foreach (var body in Object.FindObjectsOfType<Console>().ToArray())
                 {
                     body.usableDistance = useMod;
                 }
-                foreach (var body in UnityEngine.Object.FindObjectsOfType<GEAHFGDIGIC>().ToArray())
+                foreach (var body in Object.FindObjectsOfType<GEAHFGDIGIC>().ToArray())
                 {
                     body.usableDistance = useMod;
                 }
-                foreach (var body in UnityEngine.Object.FindObjectsOfType<SystemConsole>().ToArray())
+                foreach (var body in Object.FindObjectsOfType<SystemConsole>().ToArray())
                 {
                     body.usableDistance = 3f;
                 }
-                foreach (var body in UnityEngine.Object.FindObjectsOfType<DeconControl>().ToArray())
+                foreach (var body in Object.FindObjectsOfType<DeconControl>().ToArray())
                 {
                     body.usableDistance = useMod;
                 }
