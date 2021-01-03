@@ -3,3 +3,6 @@
 ################################################################################
 
 /SmolSolution/SmolMod/bin/Debug/netstandard2.1
+/SmolSolution/SmolMod/obj
+/.vs
+/SmolSolution/.vs/SmolSolution/v16
