@@ -9,7 +9,7 @@ An Among Us Mod that makes the map and pets bigger!
 
 3. Extract the `.zip` file so your Among Us directory looks like this:
 
-![Among Us Directory](https://github.com/XtraCube/Infinite-Kill-Range/blob/master/untitled.png?raw=true)
+![Among Us Directory](https://media.discordapp.net/attachments/701508634009403442/795381094064455710/unknown.png)
 
 4. Start Among Us! If the Mod worked, you should see some text saying "Bepinex" and "Reactor" and stuff.
 
