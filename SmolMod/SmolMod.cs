@@ -29,12 +29,14 @@ namespace SmolMod
         [HarmonyPatch(typeof(PlayerControl),nameof(PlayerControl.FixedUpdate))]
         public static class PlayerControlFixedUpdatePatch
         {
-            public static void Postfix()
+            public static void Postfix( PlayerControl __instance)
             {
-                SetDistances();
-                foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                if (__instance.CurrentPet.transform.localScale.x < petSize)
                 {
-                    player.CurrentPet.transform.localScale = new Vector3(petSize, petSize, player.CurrentPet.transform.localScale.z);
+                    foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                    {
+                        player.CurrentPet.transform.localScale = new Vector3(petSize, petSize, player.CurrentPet.transform.localScale.z);
+                    }
                 }
             }
         }
@@ -63,7 +65,9 @@ namespace SmolMod
             public static void Postfix(ShipStatus __instance)
             {
                 if (__instance.MapScale < mapScale)
+                {
                     SetMapSize(__instance);
+                }
             }
         }    
         
