@@ -62,7 +62,8 @@ namespace SmolMod
         {
             public static void Postfix(ShipStatus __instance)
             {
-                SetMapSize(__instance);
+                if (__instance.MapScale < mapScale)
+                    SetMapSize(__instance);
             }
         }    
         
