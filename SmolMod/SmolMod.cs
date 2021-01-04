@@ -94,7 +94,7 @@ namespace SmolMod
 
         public static void SetMapSize(ShipStatus __instance)
         {
-            __instance.transform.localScale = new Vector3(2, 2, __instance.transform.localScale.z);
+            __instance.transform.localScale = new Vector3(2, 2, 2);
             __instance.SpawnRadius = 3.1f;
             SetDistances();
             switch (__instance.Type)
