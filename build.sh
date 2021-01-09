@@ -1,1 +1,1 @@
-dotnet run --project ./SmolMod/SmolMod.csproj -- "$@"
+dotnet run --project ./Build/Build.csproj -- "$@"
