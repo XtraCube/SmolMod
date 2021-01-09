@@ -39,13 +39,17 @@ namespace SmolMod
         {
             public static void Postfix(PlayerControl __instance)
             {
-                if (__instance.CurrentPet.transform.localScale.x < petSize)
+                try
                 {
-                    foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                    if (__instance.CurrentPet.transform.localScale.x < petSize)
                     {
-                        player.CurrentPet.transform.localScale = new Vector3(petSize, petSize, player.CurrentPet.transform.localScale.z);
+                        foreach (PlayerControl player in PlayerControl.AllPlayerControls)
+                        {
+                            player.CurrentPet.transform.localScale = new Vector3(petSize, petSize, player.CurrentPet.transform.localScale.z);
+                        }
                     }
                 }
+                catch { }
             }
         }
 
@@ -125,7 +129,11 @@ namespace SmolMod
         {
             public static void Prefix(ShipStatus __instance)
             {
-                SetMapSize(__instance);
+                try
+                {
+                    SetMapSize(__instance);
+                }
+                catch { }
             }
         }
 
@@ -134,8 +142,12 @@ namespace SmolMod
         {
             public static void Prefix(ShipStatus __instance)
             {
-                SetMapSize(__instance);
-            }
+                try
+                {
+                    SetMapSize(__instance);
+                }
+                catch { }    
+            }        
         }
 
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.FixedUpdate))]
@@ -143,10 +155,14 @@ namespace SmolMod
         {
             public static void Postfix(ShipStatus __instance)
             {
-                if (__instance.MapScale < mapScale)
+                try
                 {
-                    SetMapSize(__instance);
+                    if (__instance.MapScale < mapScale)
+                    {
+                        SetMapSize(__instance);
+                    }
                 }
+                catch { }
             }
         }    
         
@@ -154,20 +170,28 @@ namespace SmolMod
         public static class MeetingHudPlayerSizePatch
         {
             public static void Postfix(MeetingHud __instance)
-            {
-                foreach (var playerVoteArea in __instance.playerStates)
+            {   try
                 {
-                    playerVoteArea.PlayerIcon.transform.localScale = new Vector3(iconSize, iconSize, playerVoteArea.PlayerIcon.transform.localScale.z);
+
+                    foreach (var playerVoteArea in __instance.playerStates)
+                    {
+                        playerVoteArea.PlayerIcon.transform.localScale = new Vector3(iconSize, iconSize, playerVoteArea.PlayerIcon.transform.localScale.z);
+                    }
                 }
+                catch { }
             }
-        }        
+        }
 
         [HarmonyPatch(typeof(MapBehaviour), nameof(MapBehaviour.FixedUpdate))]
         public static class MapBehaviourUpdatePatch
         {
             public static void Postfix(MapBehaviour __instance)
             {
-                __instance.HerePoint.transform.localScale = new Vector3(iconSize, iconSize, __instance.HerePoint.transform.localScale.z);
+                try
+                {
+                    __instance.HerePoint.transform.localScale = new Vector3(iconSize, iconSize, __instance.HerePoint.transform.localScale.z);
+                }
+                catch { }
             }
         }
 
