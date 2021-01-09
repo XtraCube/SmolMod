@@ -1,5 +1,6 @@
 # SmolMod
 An Among Us Mod that makes the map and pets bigger!
+Support for players without the mod coming soon
 
 ## Installation
 1. Download the `.zip` from releases that matches your game version.
