@@ -26,7 +26,7 @@ namespace SmolMod
         public static readonly float mapScale = 7.4f;
         public static readonly float petSize = 1.2f;
         public static readonly float iconSize = 0.6f;
-        public static float networkSize = 2f;
+        //public static float networkSize = 2f;
 
         public override void Load()
         {
@@ -179,12 +179,12 @@ namespace SmolMod
             switch (__instance.Type)
             {
                 case ShipStatus.Nested_0.Ship:
-                    networkSize = 2.4f;
+                    //networkSize = 2.4f;
                     __instance.MapScale = mapScale;
                     return;
 
                 case ShipStatus.Nested_0.Pb:
-                    networkSize = 2.1f;
+                    //networkSize = 2.1f;
                     __instance.InitialSpawnCenter = new Vector2(33.325f, -5.140f);
                     __instance.MeetingSpawnCenter = new Vector2(35.584f, -32.949f);
                     __instance.MeetingSpawnCenter2 = new Vector2(35.584f, -35.34f);
@@ -192,7 +192,7 @@ namespace SmolMod
                     return;
                     
                 case ShipStatus.Nested_0.Hq:
-                    networkSize = 2;
+                    //networkSize = 2;
                     __instance.InitialSpawnCenter = new Vector2(-8.961f, 4.133f);
                     __instance.MeetingSpawnCenter = new Vector2(50f, 2.985f);
                     __instance.MeetingSpawnCenter2 = new Vector2(50f, 2.985f);
@@ -230,7 +230,7 @@ namespace SmolMod
             float v = reader.ReadUInt16() / 65535f;
             float v2 = reader.ReadUInt16() / 65535f;
             var vector2 =  new Vector2(Mathf.Lerp(__instance.XRange.min, __instance.XRange.max, v), Mathf.Lerp(__instance.YRange.min, __instance.YRange.max, v2));
-            return vector2 *= networkSize;
+            return vector2;// *= networkSize;
         }
 
         private static bool SidGreaterThan(ushort newSid, ushort prevSid)
