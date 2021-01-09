@@ -2,19 +2,17 @@
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
         <Version>1.0.3</Version>
+		<GameVersion>2020.12.9s</GameVersion>
         <Mappings>NuclearPowered/Mappings:0.1.0-alpha.1</Mappings>
         <Configurations>Debug;Release;</Configurations>
     </PropertyGroup>
 
     <ItemGroup>
-        <Deobfuscate Include="$(AmongUs)\BepInEx\plugins\Reactor.dll" />
+		<Deobfuscate Include="$(AmongUs)\BepInEx\plugins\Reactor-$(GameVersion).dll" /> 
+      <PackageReference Include="Reactor.OxygenFilter.MSBuild" Version="0.2.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Reactor.OxygenFilter.MSBuild" Version="0.1.5" />
-    </ItemGroup>
-
-    <Target Name="Copy" AfterTargets="Reobfuscate">
-        <Copy SourceFiles="$(OutputPath)reobfuscated/$(AssemblyName).dll" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
-    </Target>
+	<Target Name="Copy" AfterTargets="Reobfuscate">
+		<Copy SourceFiles="$(OutputPath)reobfuscated/$(AssemblyName)-$(GameVersion).dll" DestinationFolder="$(AmongUs)/BepInEx/plugins/" />
+	</Target>
 </Project>
