@@ -131,8 +131,7 @@ public sealed class BuildTask : FrostingTask<BuildContext>
 
     public override void Run(BuildContext context)
     {
-        Build(context, "Reactor/Reactor.csproj");
-        Build(context, "Reactor.Debugger/Reactor.Debugger.csproj");
+        Build(context, "SmolMod/SmolMod.csproj");
     }
 }
 
