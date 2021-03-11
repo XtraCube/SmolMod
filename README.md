@@ -2,6 +2,7 @@
 An Among Us Mod that makes the map and pets bigger!
 Support for players without the mod coming soon
 
+
 ## Installation
 1. Download the `.zip` from releases that matches your game version.
 2. Copy the `.zip` file into your Among Us folder, which can be found by going to your Steam Library, right clicking Among Us, hovering over Manage, then clicking `Browse local files`.
