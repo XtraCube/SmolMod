@@ -1,18 +1,13 @@
 # SmolMod
 An Among Us Mod that makes the map and pets bigger!
-Support for players without the mod coming soon
 
+## Compatibility
+Currently supports Among Us version 2024.3.5. Also supports playing with others who do not have the mod, but they will not see the same amount of space as you
 
 ## Installation
-1. Download the `.zip` from releases that matches your game version.
-2. Copy the `.zip` file into your Among Us folder, which can be found by going to your Steam Library, right clicking Among Us, hovering over Manage, then clicking `Browse local files`.
-
-![Among Us Directory](https://media.discordapp.net/attachments/793980005880692767/794281917348446218/unknown.png)
-
-3. Extract the `.zip` file so your Among Us directory looks like this:
-
-![Among Us Directory](https://media.discordapp.net/attachments/701508634009403442/795381094064455710/unknown.png)
-
-4. Start Among Us! If the Mod worked, you should see some text saying "Bepinex" and "Reactor" and stuff.
-
-![Among Us Directory](https://media.discordapp.net/attachments/701508634009403442/795380466118950912/unknown.png)
+1. Download latest BepInEx BE build for Unity.Il2Cpp-win-x86 from [here](https://builds.bepinex.dev/projects/bepinex_be)
+2. Extract to Among Us game folder
+3. Download latest Reactor from [here](https://github.com/NuclearPowered/Reactor/releases/latest)
+4. Place Reactor.dll in BepInEx/plugins folder
+5. Download SmolMod.dll and place it in BepInEx/plugins folder
+6. Run the game and enjoy!
