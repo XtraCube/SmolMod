@@ -13,7 +13,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 8.x
+          dotnet-version: 6.x
 
       - name: Run the Cake script
         uses: cake-build/cake-action@v2
@@ -23,4 +23,4 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: SmolMod.dll
-          path: SmolMod/bin/Release/net8.0/SmolMod.dll
+          path: SmolMod/bin/Release/net6.0/SmolMod.dll
