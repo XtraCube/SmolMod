@@ -82,6 +82,18 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
     
+    // Fix zipline locations
+    [HarmonyPatch(typeof(ZiplineBehaviour), nameof(ZiplineBehaviour.Awake))]
+    public static class ZiplinePatch
+    {
+        public static void Prefix(ZiplineBehaviour __instance)
+        {
+            __instance.landingPositionTop.position /= ScaleMod;
+            __instance.landingPositionBottom.position /= ScaleMod;
+        }
+    }
+    
+    
     // Adjust ShipStatus size, MapScale, Spawn Radius, Spawn Centers, and IUsables with usableDistance fields
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
     public static class ShipSizePatch
