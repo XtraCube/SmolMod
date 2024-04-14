@@ -152,113 +152,22 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
 
-    // Patch CustomNetworkTransform to add compatibility to those without the mod
-    // there may be a better way but i really dont care that much tbh
-    // if it aint broke dont fix it
-    [HarmonyPatch(typeof(CustomNetworkTransform))]
-    public static class CustomNetTransformPatches
+    // Patch Vector2 network operations to support players without the mod
+    [HarmonyPatch(typeof(NetHelpers))]
+    public static class ReadAndWriteVectorPatches
     {
         [HarmonyPrefix]
-        [HarmonyPatch(nameof(CustomNetworkTransform.Serialize))]
-        public static bool SerializePrefix(CustomNetworkTransform __instance, MessageWriter writer, bool initialState, ref bool __result)
+        [HarmonyPatch(nameof(NetHelpers.WriteVector2))]
+        public static void WriteVector2Prefix(ref Vector2 vec)
         {
-            if (__instance.isPaused)
-            { 
-                __result = false;
-                return false;
-            }
-            if (initialState)
-            {
-                writer.Write(__instance.lastSequenceId);
-                NetHelpers.WriteVector2(__instance.body.position / ScaleMod, writer);
-                __result = true;
-                return false;
-            }
-            if (!__instance.isActiveAndEnabled)
-            {
-                __instance.ClearDirtyBits();
-                __result = false;
-                return false;
-            }
-            if (__instance.sendQueue.Count == 0)
-            {
-                __result = false;
-                return false;
-            }
-            __instance.lastSequenceId += 1;
-            writer.Write(__instance.lastSequenceId);
-            var num = (ushort)__instance.sendQueue.Count;
-            writer.WritePacked(num);
-            foreach (var vector in __instance.sendQueue)
-            {
-                NetHelpers.WriteVector2(vector/ScaleMod, writer);
-                __instance.lastPosSent = vector/ScaleMod;
-            }
-            __instance.sendQueue.Clear();
-            __instance.lastSequenceId += (ushort)(num - 1);
-            __instance.DirtyBits -= 1U;
-            __result = true;
-            return false;
+            vec /= ScaleMod;
         }
         
-        [HarmonyPrefix]
-        [HarmonyPatch(nameof(CustomNetworkTransform.Deserialize))]
-        public static bool DeserializePrefix(CustomNetworkTransform __instance, MessageReader reader, bool initialState)
+        [HarmonyPostfix]
+        [HarmonyPatch(nameof(NetHelpers.ReadVector2))]
+        public static void ReadVector2Prefix(ref Vector2 __result)
         {
-            if (__instance.isPaused)
-            {
-                return false;
-            }
-
-            if (initialState)
-            {
-                __instance.lastSequenceId = reader.ReadUInt16();
-                __instance.transform.position = NetHelpers.ReadVector2(reader)*ScaleMod;
-                __instance.incomingPosQueue.Clear();
-                __instance.incomingPosQueue.Enqueue(__instance.transform.position);
-                return false;
-            }
-
-            if (__instance.AmOwner)
-            {
-                return false;
-            }
-
-            var num = reader.ReadUInt16();
-            var num2 = reader.ReadPackedInt32();
-            Vector2 vector;
-            if (__instance.incomingPosQueue.Count > 0)
-            {
-                vector = __instance.incomingPosQueue.ToArray().Last() * ScaleMod;
-            }
-            else
-            {
-                vector = __instance.body.position;
-            }
-
-            for (var i = 0; i < num2; i++)
-            {
-                var num3 = (ushort)(num + i);
-                var vector2 = NetHelpers.ReadVector2(reader)*ScaleMod;
-                if (!NetHelpers.SidGreaterThan(num3, __instance.lastSequenceId))
-                {
-                    continue;
-                }
-                __instance.lastSequenceId = num3;
-                __instance.incomingPosQueue.Enqueue(vector2);
-                __instance.debugTargetPositions.AddPt(vector2);
-                vector = vector2;
-            }
-
-            __instance.debugTruePositions.AddPt(__instance.transform.position);
-            if (!__instance.IsInMiddleOfAnimationThatMakesPlayerInvisible())
-            {
-                return false;
-            }
-            
-            __instance.tempSnapPosition = new Il2CppSystem.Nullable<Vector2>(vector);
-            return false;
-
+            __result *= ScaleMod;
         }
     }
 }
