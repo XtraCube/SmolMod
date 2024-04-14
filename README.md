@@ -7,7 +7,5 @@ Currently supports Among Us version 2024.3.5. Also supports playing with others 
 ## Installation
 1. Download latest BepInEx BE build for Unity.Il2Cpp-win-x86 from [here](https://builds.bepinex.dev/projects/bepinex_be)
 2. Extract to Among Us game folder
-3. Download latest Reactor from [here](https://github.com/NuclearPowered/Reactor/releases/latest)
-4. Place Reactor.dll in BepInEx/plugins folder
-5. Download SmolMod.dll and place it in BepInEx/plugins folder
-6. Run the game and enjoy!
+3. Download SmolMod.dll from [latest release](https://github.com/XtraCube/SmolMod/releases/latest) and place it in BepInEx/plugins folder
+4. Run the game and enjoy!
