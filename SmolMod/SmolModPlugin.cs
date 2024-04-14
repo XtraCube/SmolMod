@@ -34,7 +34,17 @@ public partial class SmolModPlugin : BasePlugin
             __instance.MyPhysics.Speed *= ScaleMod;
         }
     }
-    
+
+    // Multiply light source distance by ScaleMod
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
+    public static class PlayerLightPatch
+    {
+        public static void Postfix(ref float __result)
+        {
+            __result *= ScaleMod;
+        }
+    }
+
     // Make pets bigger to make the players look smaller
     [HarmonyPatch(typeof(PetBehaviour), nameof(PetBehaviour.Start))]
     public static class PetSizePatch
