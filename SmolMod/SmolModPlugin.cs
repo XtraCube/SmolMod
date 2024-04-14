@@ -96,7 +96,8 @@ public partial class SmolModPlugin : BasePlugin
             {
                 t.AdjustScale(ScaleMod).AdjustPosition(ScaleMod);
             }
-
+            
+            // feel free to find a better way to do this and PR it for me thx!
             foreach (var console in Object.FindObjectsOfType<Console>())
             {
                 console.usableDistance *= ScaleMod;
@@ -148,6 +149,8 @@ public partial class SmolModPlugin : BasePlugin
     }
 
     // Patch CustomNetworkTransform to add compatibility to those without the mod
+    // there may be a better way but i really dont care that much tbh
+    // if it aint broke dont fix it
     [HarmonyPatch(typeof(CustomNetworkTransform))]
     public static class CustomNetTransformPatches
     {
