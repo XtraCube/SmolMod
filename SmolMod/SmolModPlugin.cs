@@ -1,28 +1,21 @@
-﻿using System.Linq;
-using BepInEx;
+﻿using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using Hazel;
-using Reactor;
-using Reactor.Networking;
-using Reactor.Networking.Attributes;
-using Reactor.Utilities;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace SmolMod;
 
 [BepInAutoPlugin("dev.xtracube.smolmod")]
 [BepInProcess("Among Us.exe")]
-[BepInDependency(ReactorPlugin.Id)]
-[ReactorModFlags(ModFlags.None)]
 public partial class SmolModPlugin : BasePlugin
 {
     public Harmony Harmony { get; } = new(Id);
-
-    public ConfigEntry<float> ConfigScale { get; private set; }
     
-    public static float ScaleMod => PluginSingleton<SmolModPlugin>.Instance.ConfigScale.Value;
+    public static ConfigEntry<float> ConfigScale { get; private set; }
+    
+    public static float ScaleMod => ConfigScale.Value;
     
     public override void Load()
     {
