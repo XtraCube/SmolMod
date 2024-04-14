@@ -2,9 +2,7 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/SmolSolution/SmolMod/bin/Debug/netstandard2.1
-/SmolSolution/SmolMod/obj
-/.vs
-/SmolSolution/.vs/SmolSolution/v16
-/SmolMod/bin/Debug/netstandard2.1
-/SmolMod/obj
+.vs
+.idea
+bin
+obj

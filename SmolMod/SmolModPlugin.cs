@@ -30,7 +30,7 @@ public partial class SmolModPlugin : BasePlugin
         Harmony.PatchAll();
     }
 
-    // Multiple local player speed by Scale Modifier
+    // Multiply local player speed and max report distance by Scale Modifier
     // This works with the CustomNetworkTransform patches to add compatibility with users who don't have the mod
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Start))]
     public static class PlayerSpeedPatch
@@ -79,7 +79,7 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
     
-    // Adjust ShipStatus size, MapScale, Spawn Radius, and Spawn Centers
+    // Adjust ShipStatus size, MapScale, Spawn Radius, Spawn Centers, and IUsables with usableDistance fields
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
     public static class ShipSizePatch
     {
@@ -91,7 +91,7 @@ public partial class SmolModPlugin : BasePlugin
             __instance.InitialSpawnCenter *= ScaleMod;
             __instance.MeetingSpawnCenter *= ScaleMod;
             __instance.MeetingSpawnCenter2 *= ScaleMod;
-            
+
             foreach (var t in __instance.DummyLocations)
             {
                 t.AdjustScale(ScaleMod).AdjustPosition(ScaleMod);
@@ -101,27 +101,32 @@ public partial class SmolModPlugin : BasePlugin
             {
                 console.usableDistance *= ScaleMod;
             }
-            
-            foreach (var mapConsole in Object.FindObjectsOfType<MapConsole>())
-            {
-                mapConsole.usableDistance *= ScaleMod;
-            }
-            
-            foreach (var systemConsole in Object.FindObjectsOfType<SystemConsole>())
-            {
-                systemConsole.usableDistance *= ScaleMod;
-            }
-            
-            foreach (var platformConsole in Object.FindObjectsOfType<PlatformConsole>())
-            {
-                platformConsole.usableDistance *= ScaleMod;
-            }
-            
+
             foreach (var deconControl in Object.FindObjectsOfType<DeconControl>())
             {
                 deconControl.usableDistance *= ScaleMod;
             }
-            
+
+            foreach (var mapConsole in Object.FindObjectsOfType<MapConsole>())
+            {
+                mapConsole.usableDistance *= ScaleMod;
+            }
+
+            foreach (var openDoorConsole in Object.FindObjectsOfType<OpenDoorConsole>())
+            {
+                openDoorConsole.usableDisance *= ScaleMod;
+            }
+
+            foreach (var platformConsole in Object.FindObjectsOfType<PlatformConsole>())
+            {
+                platformConsole.usableDistance *= ScaleMod;
+            }
+
+            foreach (var systemConsole in Object.FindObjectsOfType<SystemConsole>())
+            {
+                systemConsole.usableDistance *= ScaleMod;
+            }
+
             foreach (var ziplineConsole in Object.FindObjectsOfType<ZiplineConsole>())
             {
                 ziplineConsole.usableDistance *= ScaleMod;
@@ -129,6 +134,20 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
     
+    // patch UsableDistance getters for IUsables without a usableDistance field
+    [HarmonyPatch(typeof(DoorConsole), "UsableDistance", MethodType.Getter)]
+    [HarmonyPatch(typeof(Ladder), "UsableDistance", MethodType.Getter)]
+    [HarmonyPatch(typeof(OptionsConsole), "UsableDistance", MethodType.Getter)]
+    [HarmonyPatch(typeof(Vent), "UsableDistance", MethodType.Getter)]
+    public static class UsableDistancePatch
+    {
+        public static void Postfix(ref float __result)
+        {
+            __result *= ScaleMod;
+        }
+    }
+
+    // Patch CustomNetworkTransform to add compatibility to those without the mod
     [HarmonyPatch(typeof(CustomNetworkTransform))]
     public static class CustomNetTransformPatches
     {
