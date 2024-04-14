@@ -93,6 +93,35 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
     
+    // Fix moving platform on Airship
+    [HarmonyPatch(typeof(PlatformConsole), nameof(PlatformConsole.CanUse))]
+    public static class PlatformConsolePatch
+    {
+        public static bool Prefix(PlatformConsole __instance, GameData.PlayerInfo pc, ref float __result, ref bool canUse, ref bool couldUse)
+        {
+            var num = float.MaxValue;
+            var @object = pc.Object;
+            couldUse = !pc.IsDead &&
+                       @object.CanMove &&
+                       !__instance.Platform.InUse &&
+                       Vector2.Distance(__instance.Platform.transform.position, __instance.transform.position) < @object.MaxReportDistance;
+            canUse = couldUse;
+            if (canUse)
+            {
+                var truePosition = @object.GetTruePosition();
+                var position = __instance.transform.position;
+                num = Vector2.Distance(truePosition, position);
+                canUse &= num <= __instance.UsableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false);
+            }
+            __result = num;
+            
+            
+            return false;
+        }
+    }
+    
+    
+    
     
     // Adjust ShipStatus size, MapScale, Spawn Radius, Spawn Centers, and IUsables with usableDistance fields
     [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
@@ -113,37 +142,37 @@ public partial class SmolModPlugin : BasePlugin
             }
             
             // feel free to find a better way to do this and PR it for me thx!
-            foreach (var console in Object.FindObjectsOfType<Console>())
+            foreach (var console in Object.FindObjectsOfType<Console>(true))
             {
                 console.usableDistance *= ScaleMod;
             }
 
-            foreach (var deconControl in Object.FindObjectsOfType<DeconControl>())
+            foreach (var deconControl in Object.FindObjectsOfType<DeconControl>(true))
             {
                 deconControl.usableDistance *= ScaleMod;
             }
 
-            foreach (var mapConsole in Object.FindObjectsOfType<MapConsole>())
+            foreach (var mapConsole in Object.FindObjectsOfType<MapConsole>(true))
             {
                 mapConsole.usableDistance *= ScaleMod;
             }
 
-            foreach (var openDoorConsole in Object.FindObjectsOfType<OpenDoorConsole>())
+            foreach (var openDoorConsole in Object.FindObjectsOfType<OpenDoorConsole>(true))
             {
                 openDoorConsole.usableDisance *= ScaleMod;
             }
 
-            foreach (var platformConsole in Object.FindObjectsOfType<PlatformConsole>())
+            foreach (var platformConsole in Object.FindObjectsOfType<PlatformConsole>(true))
             {
                 platformConsole.usableDistance *= ScaleMod;
             }
 
-            foreach (var systemConsole in Object.FindObjectsOfType<SystemConsole>())
+            foreach (var systemConsole in Object.FindObjectsOfType<SystemConsole>(true))
             {
                 systemConsole.usableDistance *= ScaleMod;
             }
 
-            foreach (var ziplineConsole in Object.FindObjectsOfType<ZiplineConsole>())
+            foreach (var ziplineConsole in Object.FindObjectsOfType<ZiplineConsole>(true))
             {
                 ziplineConsole.usableDistance *= ScaleMod;
             }
