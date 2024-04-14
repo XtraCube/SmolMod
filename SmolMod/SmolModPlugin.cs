@@ -138,7 +138,8 @@ public partial class SmolModPlugin : BasePlugin
         }
     }
     
-    // patch UsableDistance getters for IUsables without a usableDistance field
+    // for some reason, using TargetMethods crashes the game.
+    // patch UsableDistance getters for IUsables without a usableDistance field.
     [HarmonyPatch(typeof(DoorConsole), "UsableDistance", MethodType.Getter)]
     [HarmonyPatch(typeof(Ladder), "UsableDistance", MethodType.Getter)]
     [HarmonyPatch(typeof(OptionsConsole), "UsableDistance", MethodType.Getter)]
