@@ -36,7 +36,7 @@ public static class ShipPatches
 
             foreach (var t in __instance.DummyLocations)
             {
-                t.AdjustScale(scaleMod).AdjustPosition(scaleMod);
+                t.AdjustPosition(scaleMod);
             }
             
             // feel free to find a better way to do this and PR it for me thx!
