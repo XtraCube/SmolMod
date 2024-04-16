@@ -1,7 +1,9 @@
-﻿using BepInEx;
+﻿using System;
+using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
+using UnityEngine.SceneManagement;
 
 namespace SmolMod;
 
@@ -19,5 +21,14 @@ public partial class SmolModPlugin : BasePlugin
     {
         ConfigScale = Config.Bind("Scale", "GlobalModifier", 1.5f, "Scale modifier used for SmolMod scaling");
         Harmony.PatchAll();
+        
+        // taken out of reactor, but this mod doesn't depend on reactor, so that's why its here
+        SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>) ((scene, _) =>
+        {
+            if (scene.name == "MainMenu")
+            {
+                ModManager.Instance.ShowModStamp();
+            }
+        }));
     }
 }
