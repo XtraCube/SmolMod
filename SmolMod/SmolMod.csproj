@@ -6,6 +6,7 @@
         <Version>2.0.2</Version>
         <Description>Make the map and pets larger so you feel smaller!</Description>
         <Authors>XtraCube</Authors>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     </PropertyGroup>
     
     <ItemGroup>

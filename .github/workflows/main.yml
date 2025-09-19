@@ -4,7 +4,7 @@ on: [ "push", "pull_request" ]
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
         with:
@@ -13,14 +13,20 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 6.x
+          dotnet-version: 8.0.x
 
       - name: Run the Cake script
-        uses: cake-build/cake-action@v2
+        uses: cake-build/cake-action@v3
         with:
           verbosity: Diagnostic
 
       - uses: actions/upload-artifact@v4
         with:
           name: SmolMod.dll
-          path: SmolMod/bin/Release/net6.0/SmolMod.dll
+          path: SmolMod/bin/Release/SmolMod.dll
+
+      - uses: softprops/action-gh-release@v2
+        if: github.ref_type == 'tag'
+        with:
+          draft: true
+          files: SmolMod/bin/Release/SmolMod.dll
