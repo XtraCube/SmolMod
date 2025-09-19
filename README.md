@@ -2,7 +2,9 @@
 An Among Us Mod that makes the map and pets bigger, so you feel smaller
 
 ## Compatibility
-Currently supports Among Us version 2024.3.5. Also supports playing with others who do not have the mod, but they will not see the same amount of space as you.
+Currently supports Among Us `2023.3.28` - `17.0.0` (`2025.9.9`). Probably supports future versions too.
+
+Also supports playing with others who do not have the mod, but they will not see the same amount of space as you.
 
 ### Setting the scale above 2 is not recommended. There are issues with higher scales
 
