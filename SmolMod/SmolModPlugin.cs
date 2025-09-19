@@ -3,6 +3,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
+using SmolMod.Patches;
 using UnityEngine.SceneManagement;
 
 namespace SmolMod;
@@ -22,7 +23,20 @@ public partial class SmolModPlugin : BasePlugin
         ConfigScale = Config.Bind("Scale", "GlobalModifier", 1.5f, "Scale modifier used for SmolMod scaling");
         Harmony.PatchAll();
         
-        // taken out of reactor, but this mod doesn't depend on reactor, so that's why its here
+        ConfigScale.SettingChanged += (_, _) =>
+        {
+            if (HudManager.InstanceExists)
+            {
+                HudStartPatch.UpdateSize();
+            }
+
+            foreach (var player in PlayerControl.AllPlayerControls)
+            {
+                player.UpdateSize();
+            }
+        };
+        
+        // taken out of reactor, but this mod doesn't depend on reactor, so that's why it's here
         SceneManager.add_sceneLoaded((Action<Scene, LoadSceneMode>) ((scene, _) =>
         {
             if (scene.name == "MainMenu")
