@@ -1,5 +1,5 @@
 # SmolMod
-An Among Us Mod that makes the map and pets bigger, so you feel smaller
+An Among Us Mod that makes players the size of pets!
 
 ## Compatibility
 Currently supports Among Us `2023.3.28` - `17.0.0` (`2025.9.9`). Probably supports future versions too.
